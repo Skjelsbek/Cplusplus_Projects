@@ -1,0 +1,4 @@
+﻿  main.c
+c:\users\skjel\documents\visual studio 2015\projects\el-pom1001-3\el-pom1001-3\main.c(26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  EL-POM1001-3.vcxproj -> c:\users\skjel\documents\visual studio 2015\Projects\EL-POM1001-3\Debug\EL-POM1001-3.exe
+  EL-POM1001-3.vcxproj -> c:\users\skjel\documents\visual studio 2015\Projects\EL-POM1001-3\Debug\EL-POM1001-3.pdb (Full PDB)
