@@ -1,10 +1,1 @@
-﻿  main.c
-<<<<<<< HEAD
-d:\cplusplus_projects\el-pom1001-3\el-pom1001-3\main.c(26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  EL-POM1001-3.vcxproj -> D:\Cplusplus_Projects\EL-POM1001-3\Debug\EL-POM1001-3.exe
-  EL-POM1001-3.vcxproj -> D:\Cplusplus_Projects\EL-POM1001-3\Debug\EL-POM1001-3.pdb (Partial PDB)
-=======
-d:\c++_projects\el-pom1001-3\el-pom1001-3\main.c(26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  EL-POM1001-3.vcxproj -> D:\C++_Projects\EL-POM1001-3\Debug\EL-POM1001-3.exe
-  EL-POM1001-3.vcxproj -> D:\C++_Projects\EL-POM1001-3\Debug\EL-POM1001-3.pdb (Full PDB)
->>>>>>> f53e66596dcf2d482eb7332ce30f9cf9ea5f4114
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.Cpp.Platform.targets(57,5): error MSB8020: The build tools for v141 (Platform Toolset = 'v141') cannot be found. To build using the v141 build tools, please install v141 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".

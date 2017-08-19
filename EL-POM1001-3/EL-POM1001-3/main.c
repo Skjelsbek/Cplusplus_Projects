@@ -2,7 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "math.h"
-
+#include <iostream>
 
 int main() {
 
@@ -12,7 +12,8 @@ int main() {
 	int ar = 0;
 	float belopEtter;
 
-	// Henter beløp, rente og år fra bruker
+	// Henter beløp, rente og år fra bruker	
+	std::cout << "snickers";
 	printf("Skriv inn belop:\n");
 	scanf("%f", &belop);
 	printf("Skriv inn rente:\n");
