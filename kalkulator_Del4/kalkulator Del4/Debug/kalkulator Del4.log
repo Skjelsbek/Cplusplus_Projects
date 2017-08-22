@@ -1,0 +1,4 @@
+﻿D:\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (kalkulator Del4.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Del4.cpp
+  kalkulator Del4.vcxproj -> D:\C++_Projects\kalkulator_Del4\Debug\kalkulator_Del4.exe
+  kalkulator Del4.vcxproj -> D:\C++_Projects\kalkulator_Del4\Debug\kalkulator_Del4.pdb (Partial PDB)
