@@ -1,19 +1,6 @@
 #include <iostream>
 #include <string>
 
-// Alternativ til cin som takler mellomrom
-std::string getInput() 
-{
-	std::string input = "";
-	char c = std::cin.get();
-	while (c != '\n') 
-	{
-		input += c;
-		c = std::cin.get();
-	}
-	return input;
-}
-
 // Sjekker om en string innehloder en spesifikk char
 bool contains(std::string s, char c)
 {
@@ -71,6 +58,8 @@ std::string fixSyntax(std::string str)
 {		
 	str = replace(str, "--", "+");
 	str = replace(str, "+-", "-");
+	str = replace(str, "-+", "-");
+	str = replace(str, "++", "-");
 	return str;
 }
 
@@ -188,6 +177,8 @@ std::string multiplicationAndDivision(std::string calculation)
 		return calculation;
 	}
 
+	calculation = fixSyntax(calculation);
+
 	// Finner regneart
 	while (index < calculation.length() && (calculation[index] != '*' && calculation[index] != '/')) 
 	{
@@ -205,7 +196,7 @@ std::string multiplicationAndDivision(std::string calculation)
 		index--;		
 	}
 	if (isdigit(calculation[index])) 
-	{
+	{	
 		firstNumberStartIndex = index;
 	}
 	else
@@ -217,10 +208,16 @@ std::string multiplicationAndDivision(std::string calculation)
 	for (unsigned short int i = firstNumberStartIndex; i < operationIndex; i++)
 	{
 		sFirstNumber += calculation[i];
-	}
+	}	
 
 	// Lagrer det andre tallet
 	index = operationIndex + 1;
+	if (calculation[index] == '-' || calculation[index] == '+')
+	{
+		sSecondNumber += calculation[index];
+		index++;
+	}
+	
 	while (index < calculation.length() && (isdigit(calculation[index]) || calculation[index] == '.')) 
 	{
 		sSecondNumber += calculation[index];
@@ -273,44 +270,44 @@ std::string parentheses(std::string calculation)
 		return "Syntax Error!";
 	}
 
-	unsigned short int firstParenthesesIndex = 0, lastParenthesesIndex = 0;
-	std::string parenthesesContent = "";
+	unsigned short int firstParentheiesIndex = 0, lastParenthesisIndex = 0;
+	std::string parenthesisContent = "";
 	std::string newCalculation = "";
 	
-	while (calculation[lastParenthesesIndex] != ')')
+	while (calculation[lastParenthesisIndex] != ')')
 	{
-		lastParenthesesIndex++;
+		lastParenthesisIndex++;
 	}
 
-	firstParenthesesIndex = lastParenthesesIndex - 1;
-	while (calculation[firstParenthesesIndex] != '(')
+	firstParentheiesIndex = lastParenthesisIndex - 1;
+	while (calculation[firstParentheiesIndex] != '(')
 	{
-		firstParenthesesIndex--;
+		firstParentheiesIndex--;
 	}
 
 
-	for (unsigned short int i = firstParenthesesIndex + 1; i < lastParenthesesIndex; i++)
+	for (unsigned short int i = firstParentheiesIndex + 1; i < lastParenthesisIndex; i++)
 	{
-		parenthesesContent += calculation[i];
+		parenthesisContent += calculation[i];
 	}
 	
-	if (contains(parenthesesContent, '*') || contains(parenthesesContent, '/'))
+	if (contains(parenthesisContent, '*') || contains(parenthesisContent, '/'))
 	{
-		parenthesesContent = multiplicationAndDivision(parenthesesContent);
+		parenthesisContent = multiplicationAndDivision(parenthesisContent);
 	}
-	if (contains(parenthesesContent, '+') || contains(parenthesesContent, '-'))
+	if (contains(parenthesisContent, '+') || contains(parenthesisContent, '-'))
 	{
-		parenthesesContent = additionAndSubtraction(parenthesesContent);
+		parenthesisContent = additionAndSubtraction(parenthesisContent);
 	}
 
-	for (unsigned short int i = 0; i < firstParenthesesIndex; i++)
+	for (unsigned short int i = 0; i < firstParentheiesIndex; i++)
 	{
 		newCalculation += calculation[i];
 	}
 
-	newCalculation += parenthesesContent;
+	newCalculation += parenthesisContent;
 
-	for (unsigned short int i = lastParenthesesIndex + 1; i < calculation.length(); i++)
+	for (unsigned short int i = lastParenthesisIndex + 1; i < calculation.length(); i++)
 	{
 		newCalculation += calculation[i];
 	}
@@ -321,43 +318,45 @@ std::string parentheses(std::string calculation)
 }
 
 int main() 
-{
-	char runAgain;	
-	std::string calculation = "", answer = "";	
+{	
+	std::string calculation = "", answer = "", runAgain = "";
 
 	do 
 	{		
-		system("cls");		
+		system("cls");
 		std::cout << "Skriv inn regnestykket> ";
-		calculation = getInput();
-		answer = checkSyntax(calculation);
+		getline(std::cin, calculation);
 
-		if (contains(answer, '(') || contains(answer, ')'))
+		if (!calculation.empty()) 
 		{
-			answer = parentheses(answer);
-		}		
+			answer = checkSyntax(calculation);
+
+			if (contains(answer, '(') || contains(answer, ')'))
+			{
+				answer = parentheses(answer);
+			}		
 		
-		if (contains(answer, '*') || contains(answer, '/'))
-		{
-			answer = multiplicationAndDivision(answer);
-		}
+			if (contains(answer, '*') || contains(answer, '/'))
+			{
+				answer = multiplicationAndDivision(answer);
+			}
 		
-		if (contains(answer, '+') || contains(answer, '-'))
-		{
-			answer = additionAndSubtraction(answer);
-		}
+			if (contains(answer, '+') || contains(answer, '-'))
+			{
+				answer = additionAndSubtraction(answer);
+			}
 		
-		if (answer == "Syntax Error!")
-		{
-			std::cout << answer << std::endl;
+			if (answer == "Syntax Error!")
+			{
+				std::cout << answer << std::endl;
+			}
+			else
+			{
+				std::cout << "Svaret pa " << calculation << " er " << std::stod(answer) << std::endl;
+			}
 		}
-		else
-		{
-			std::cout << "Svaret pa " << calculation << " er " << answer << std::endl;
-		}
-		std::cout << "Husk at det ikke gar a dele pa eller gange med ett negativt tall enda!!!" << std::endl;
 		std::cout << "Trykk 'a' for a avslutte programmet, alt annet starter programmet pa nytt." << std::endl;
-		runAgain = getInput()[0];
-	} while (runAgain != 'a');
+		getline(std::cin, runAgain);
+	} while (runAgain[0] != 'a');
 	return 0;
 }
