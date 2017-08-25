@@ -59,7 +59,7 @@ std::string fixSyntax(std::string str)
 	str = replace(str, "--", "+");
 	str = replace(str, "+-", "-");
 	str = replace(str, "-+", "-");
-	str = replace(str, "++", "-");
+	str = replace(str, "++", "+");
 	return str;
 }
 
@@ -103,7 +103,7 @@ std::string additionAndSubtraction(std::string calculation)
 		{
 			s += calculation[i];
 		}
-		if (!(contains(s, '+') && contains(s, '-')))
+		if (!(contains(s, '+') || contains(s, '-')))
 		{
 			return calculation;
 		}
@@ -119,7 +119,7 @@ std::string additionAndSubtraction(std::string calculation)
 	}
 	
 	calculation = fixSyntax(calculation);
-
+	
 	while (index < calculation.length() && (isdigit(calculation[index]) || calculation[index] == '.'))
 	{
 		sFirstNumber += calculation[index];
@@ -154,21 +154,16 @@ std::string additionAndSubtraction(std::string calculation)
 	{
 		notCalculated += calculation[i];
 	}
-
+	
 	return additionAndSubtraction(sSum + notCalculated);
 }
 
 // Tar hånd om gange og dele operasjoner
 std::string multiplicationAndDivision(std::string calculation) 
 {
-	std::string sFirstNumber = "";
-	std::string sSecondNumber = "";
-	std::string sSum = "";
+	std::string sFirstNumber = "", sSecondNumber = "", sSum = "", sBeforeAnswer = "", sAfterAnswer = "";
 	char operation;
-	double dFirstNumber = 0;
-	double dSecondNumber = 0;
-	double dSum = 0;
-	std::string beforeAnswer = "", afterAnswer = "";
+	double dFirstNumber = 0, dSecondNumber = 0, dSum = 0;
 	unsigned short int index = 0, operationIndex = 0, firstNumberStartIndex = 0;
 
 	// Base case
@@ -250,13 +245,24 @@ std::string multiplicationAndDivision(std::string calculation)
 		
 	for (unsigned short int i = 0; i < firstNumberStartIndex; i++) 
 	{
-		beforeAnswer += calculation[i];
+		sBeforeAnswer += calculation[i];
 	}
 	for (unsigned short int i = index; i < calculation.length(); i++)
 	{
-		afterAnswer += calculation[i];
+		sAfterAnswer += calculation[i];
 	}
-	return multiplicationAndDivision(beforeAnswer + sSum + afterAnswer);
+	return multiplicationAndDivision(sBeforeAnswer + sSum + sAfterAnswer);
+}
+
+std::string power(std::string calculation)
+{
+	std::string sFirstNumber = "", sSecondNumber = "", sAnswer = "", sBeforeAnswer = "", sAfterAnswer = "";
+	double dFirstNumber, dSecondNumber, dAnswer;
+	unsigned short int operatorIndex, index;
+
+
+
+	return calculation;
 }
 
 // Løser opp parantesene i utrykket
@@ -265,7 +271,8 @@ std::string parentheses(std::string calculation)
 	if (!contains(calculation, ')'))
 	{
 		return calculation;
-	} else if (count(calculation, '(') != count(calculation, ')')) 
+	} 
+	else if (count(calculation, '(') != count(calculation, ')')) 
 	{
 		return "Syntax Error!";
 	}
@@ -311,10 +318,8 @@ std::string parentheses(std::string calculation)
 	{
 		newCalculation += calculation[i];
 	}
-
-	newCalculation = parentheses(newCalculation);
-
-	return newCalculation;
+	
+	return	parentheses(newCalculation);
 }
 
 int main() 
