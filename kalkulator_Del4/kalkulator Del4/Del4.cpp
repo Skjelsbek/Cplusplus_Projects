@@ -2,11 +2,11 @@
 #include <string>
 
 // Sjekker om en string innehloder en spesifikk char
-bool contains(std::string s, char c)
+bool contains(std::string str, char c)
 {
-	for (unsigned short int i = 0; i < s.length(); i++)
+	for (unsigned short int i = 0; i < str.length(); i++)
 	{
-		if(s[i] == c)
+		if(str[i] == c)
 		{
 			return true;
 		}
@@ -15,12 +15,12 @@ bool contains(std::string s, char c)
 }
 
 // Teller hvor mange ganger en char oppstår i en string
-unsigned short int count(std::string s, char c)
+unsigned short int count(std::string str, char c)
 {
 	unsigned short int counter = 0;
-	for (unsigned short int i = 0; i < s.length(); i++)
+	for (unsigned short int i = 0; i < str.length(); i++)
 	{
-		if (s[i] == c)
+		if (str[i] == c)
 		{
 			counter++;
 		}
@@ -29,14 +29,14 @@ unsigned short int count(std::string s, char c)
 }
 
 // Fjerner alle mellomromene i en string
-std::string removeSpaces(std::string s) 
+std::string removeSpaces(std::string str) 
 {
 	std::string tmp = "";
-	for (unsigned short int i = 0; i < s.length(); i++)
+	for (unsigned short int i = 0; i < str.length(); i++)
 	{
-		if (s[i] != ' ') 
+		if (str[i] != ' ') 
 		{
-			tmp += s[i];
+			tmp += str[i];
 		}
 	}
 	return tmp;
@@ -68,7 +68,7 @@ std::string checkSyntax(std::string str)
 {
 	str = removeSpaces(str);
 	str = fixSyntax(str);
-	std::string allowedSyntax = "1234567890+-*/()^sqrtpi%!";
+	std::string allowedSyntax = "1234567890+-*/()^sqrtpi%!.";
 	for (unsigned short int i = 0; i < str.length(); i++)
 	{
 		if (!contains(allowedSyntax, str[i]))
@@ -160,17 +160,17 @@ std::string additionAndSubtraction(std::string calculation)
 
 // Tar hånd om gange og dele operasjoner
 std::string multiplicationAndDivision(std::string calculation) 
-{
-	std::string sFirstNumber = "", sSecondNumber = "", sSum = "", sBeforeAnswer = "", sAfterAnswer = "";
-	char operation;
-	double dFirstNumber = 0, dSecondNumber = 0, dSum = 0;
-	unsigned short int index = 0, operationIndex = 0, firstNumberStartIndex = 0;
-
+{	
 	// Base case
 	if (!contains(calculation, '*') && !contains(calculation, '/'))
 	{
 		return calculation;
 	}
+
+	std::string sFirstNumber = "", sSecondNumber = "", sSum = "", sBeforeAnswer = "", sAfterAnswer = "";
+	char operation;
+	double dFirstNumber = 0, dSecondNumber = 0, dSum = 0;
+	unsigned short int index = 0, operationIndex = 0, firstNumberStartIndex = 0;
 
 	calculation = fixSyntax(calculation);
 
@@ -254,25 +254,14 @@ std::string multiplicationAndDivision(std::string calculation)
 	return multiplicationAndDivision(sBeforeAnswer + sSum + sAfterAnswer);
 }
 
-std::string power(std::string calculation)
-{
-	std::string sFirstNumber = "", sSecondNumber = "", sAnswer = "", sBeforeAnswer = "", sAfterAnswer = "";
-	double dFirstNumber, dSecondNumber, dAnswer;
-	unsigned short int operatorIndex, index;
-
-
-
-	return calculation;
-}
-
 // Løser opp parantesene i utrykket
-std::string parentheses(std::string calculation) 
+std::string parentheses(std::string calculation)
 {
 	if (!contains(calculation, ')'))
 	{
 		return calculation;
-	} 
-	else if (count(calculation, '(') != count(calculation, ')')) 
+	}
+	else if (count(calculation, '(') != count(calculation, ')'))
 	{
 		return "Syntax Error!";
 	}
@@ -280,7 +269,7 @@ std::string parentheses(std::string calculation)
 	unsigned short int firstParentheiesIndex = 0, lastParenthesisIndex = 0;
 	std::string parenthesisContent = "";
 	std::string newCalculation = "";
-	
+
 	while (calculation[lastParenthesisIndex] != ')')
 	{
 		lastParenthesisIndex++;
@@ -297,7 +286,7 @@ std::string parentheses(std::string calculation)
 	{
 		parenthesisContent += calculation[i];
 	}
-	
+
 	if (contains(parenthesisContent, '*') || contains(parenthesisContent, '/'))
 	{
 		parenthesisContent = multiplicationAndDivision(parenthesisContent);
@@ -318,8 +307,142 @@ std::string parentheses(std::string calculation)
 	{
 		newCalculation += calculation[i];
 	}
-	
+
 	return	parentheses(newCalculation);
+}
+
+std::string power(std::string calculation)
+{	
+	// Base case
+	if (!contains(calculation, '^'))
+	{
+		return calculation;
+	}
+
+	std::string sFirstNumber = "", sSecondNumber = "", sSum = "", sBeforeAnswer = "", sAfterAnswer = "";
+	double dFirstNumber = 0, dSecondNumber = 0, dSum = 0;
+	unsigned short int index = 0, operationIndex = 0, firstNumberStartIndex = 0;
+	
+	calculation = fixSyntax(calculation);
+
+	// Finner regneart
+	while (index < calculation.length() && (calculation[index] != '^'))
+	{
+		index++;
+	}
+
+	// Lagrer regneartens index
+	operationIndex = index;
+	
+	// Finner startindeksen til det første tallet
+	index--;
+	if (calculation[index] == ')')
+	{
+		unsigned short int cpc = 1;	// cpc = closing parentheses count
+		unsigned short int opc = 0; // opc = opening parentheses count
+		index--;
+
+		while (index >= 0 && cpc != opc)
+		{
+			if (calculation[index] == ')') 
+			{
+				cpc++;
+			}
+			else if (calculation[index] == '(')
+			{
+				opc++;
+			}
+			index--;
+		}
+		firstNumberStartIndex = ++index;
+	}
+	else 
+	{
+		while (index > 0 && (isdigit(calculation[index]) || calculation[index] == '.'))
+		{
+			index--;
+		}
+		if (isdigit(calculation[index]))
+		{
+			firstNumberStartIndex = index;
+		}
+		else
+		{
+			firstNumberStartIndex = ++index;
+		}
+	}
+
+	// Lagrer det første tallet
+	for (unsigned short int i = firstNumberStartIndex; i < operationIndex; i++)
+	{
+		sFirstNumber += calculation[i];
+	}		
+	if (contains(sFirstNumber, ')'))
+	{	
+		sFirstNumber = parentheses(sFirstNumber);
+	}
+
+	// Lagrer det andre tallet
+	index = operationIndex + 1;	
+	if (calculation[index] == '(')
+	{
+		unsigned short int cpc = 0;	// cpc = closing parentheses count
+		unsigned short int opc = 1; // opc = opening parentheses count
+		index++;
+
+		while (index < calculation.length() && cpc != opc)
+		{
+			if (calculation[index] == ')')
+			{
+				cpc++;
+			}
+			else if (calculation[index] == '(')
+			{
+				opc++;
+			}
+			index++;
+		}		
+
+		for (unsigned short int i = operationIndex + 1; i < index; i++)
+		{
+			sSecondNumber += calculation[i];
+		}
+		
+		sSecondNumber = parentheses(sSecondNumber);
+	}
+	else
+	{
+		if (calculation[index] == '-' || calculation[index] == '+')
+		{
+			sSecondNumber += calculation[index];
+			index++;
+		}		
+		while (index < calculation.length() && (isdigit(calculation[index]) || calculation[index] == '.'))
+		{
+			sSecondNumber += calculation[index];
+			index++;
+		}
+	}
+
+
+	// Konverterer tallene fra string til double
+	dFirstNumber = std::stod(sFirstNumber);
+	dSecondNumber = std::stod(sSecondNumber);
+
+	dSum = pow(dFirstNumber, dSecondNumber);
+
+	// Putter svaret tilbake i resten av utrykket og kjører rekursivt kall til det ikke er flere gange og dele operasjoner i utrykket.
+	sSum = std::to_string(dSum);
+
+	for (unsigned short int i = 0; i < firstNumberStartIndex; i++)
+	{
+		sBeforeAnswer += calculation[i];
+	}
+	for (unsigned short int i = index; i < calculation.length(); i++)
+	{
+		sAfterAnswer += calculation[i];
+	}
+	return power(sBeforeAnswer + sSum + sAfterAnswer);
 }
 
 int main() 
@@ -336,16 +459,21 @@ int main()
 		{
 			answer = checkSyntax(calculation);
 
+			if (contains(answer, '^'))
+			{
+				answer = power(answer);
+			}
+
 			if (contains(answer, '(') || contains(answer, ')'))
 			{
 				answer = parentheses(answer);
-			}		
-		
+			}								
+			
 			if (contains(answer, '*') || contains(answer, '/'))
 			{
 				answer = multiplicationAndDivision(answer);
 			}
-		
+			
 			if (contains(answer, '+') || contains(answer, '-'))
 			{
 				answer = additionAndSubtraction(answer);
@@ -358,7 +486,7 @@ int main()
 			else
 			{
 				std::cout << "Svaret pa " << calculation << " er " << std::stod(answer) << std::endl;
-			}
+			}			
 		}
 		std::cout << "Trykk 'a' for a avslutte programmet, alt annet starter programmet pa nytt." << std::endl;
 		getline(std::cin, runAgain);
