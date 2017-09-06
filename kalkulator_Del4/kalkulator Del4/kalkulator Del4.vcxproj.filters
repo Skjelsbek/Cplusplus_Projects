@@ -18,18 +18,18 @@
     <ClCompile Include="Del4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Kalkulator.cpp">
+    <ClCompile Include="Syntax.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Syntax.cpp">
+    <ClCompile Include="Calculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Kalkulator.h">
+    <ClInclude Include="Syntax.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Syntax.h">
+    <ClInclude Include="Calculator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

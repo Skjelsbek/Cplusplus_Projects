@@ -1,31 +1,20 @@
 #include <iostream>
 #include <string>
 
-// Tømmer buffer og skriver all inputen til en string (Nils ga meg ideen)
-std::string getInput() {
-	std::string input = "";
-	char c = std::cin.get();
-	while (c != '\n') {
-		input += c;
-		c = std::cin.get();
-	}
-	return input;
-}
-
 int main() 
 {	
 	std::string sTall1, sTall2, sRegneart;
-	float fTall1, fTall2, svar;
+	double fTall1, fTall2, svar;
 	char cRegneart;
 	bool feilRegneArt = false, delePaNull = false, ikkeTall1 = false, ikkeTall2 = false, punktum = false;
 
 	// Bruker getInput funksjonen til å hente data fra bruker
 	std::cout << "Skriv inn tall 1" << std::endl;
-	sTall1 = getInput();
+	getline(std::cin, sTall1);
 	std::cout << "Skriv onsket regneart" << std::endl;
-	sRegneart = getInput();
+	cRegneart = getchar();
 	std::cout << "Skriv inn tall 2" << std::endl;
-	sTall2 = getInput();
+	getline(std::cin, sTall2);
 
 	// Sjekker den innhentede regnearten
 	if (sRegneart.length() > 1) 

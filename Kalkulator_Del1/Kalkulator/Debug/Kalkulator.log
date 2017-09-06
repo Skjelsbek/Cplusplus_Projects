@@ -1,6 +1,6 @@
 ﻿D:\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Kalkulator Del1.vcxproj, Kalkulator.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Del1.cpp
-d:\c++_projects\kalkulator_del1\kalkulator\del1.cpp(41): warning C4018: '<': signed/unsigned mismatch
-d:\c++_projects\kalkulator_del1\kalkulator\del1.cpp(60): warning C4018: '<': signed/unsigned mismatch
+d:\c++_projects\kalkulator_del1\kalkulator\del1.cpp(30): warning C4018: '<': signed/unsigned mismatch
+d:\c++_projects\kalkulator_del1\kalkulator\del1.cpp(49): warning C4018: '<': signed/unsigned mismatch
   Kalkulator.vcxproj -> D:\C++_Projects\Kalkulator_Del1\Debug\Kalkulator_Del1.exe
   Kalkulator.vcxproj -> D:\C++_Projects\Kalkulator_Del1\Debug\Kalkulator_Del1.pdb (Partial PDB)
