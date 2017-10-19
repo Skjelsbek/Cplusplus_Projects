@@ -11,7 +11,7 @@ public:
 	Vertex(const double &x, const double &y, const double &z);
 	Vertex(const Vertex &v);
 	Vertex &operator=(const Vertex &v);
-	std::string toString();
+	friend std::ostream &operator<<(std::ostream &o, const Vertex &v);
 
 private:
 	double m_x;

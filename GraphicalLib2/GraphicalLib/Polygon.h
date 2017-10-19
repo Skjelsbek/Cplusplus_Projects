@@ -4,7 +4,6 @@
 class Polygon
 {
 public:
-	Polygon();
 	Polygon(const Polygon &p);
 	Polygon &operator=(const Polygon &v);
 	Polygon(const Line &l1, const Line &l2);
@@ -17,8 +16,7 @@ public:
 	friend Polygon operator+(const Polygon &p, const Vertex &v);
 	friend Polygon operator+(const Polygon &p, const Line &l);
 	friend Polygon operator+(const Polygon &p1, const Polygon &p2);
-	void extend();
-	std::string toString();
+	friend std::ostream &operator<<(std::ostream &oss, const Polygon &p);
 	~Polygon();
 
 private:	

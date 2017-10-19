@@ -2,7 +2,6 @@
 #include "Vertex.h"
 
 Vertex::Vertex() {
-
 }
 
 Vertex::Vertex(const double &x, const double &y)
@@ -34,18 +33,15 @@ Vertex &Vertex::operator=(const Vertex &v)
 	return *this;
 }
 
-std::string Vertex::toString()
+std::ostream &operator<<(std::ostream &oss, const Vertex &v)
 {
-	if (m_z != 0)
+	if (v.m_z != 0)
 	{
-		std::ostringstream oss;
-		oss << "(" << m_x << "," << m_y << "," << m_z << ")";
-		return oss.str();
+		oss << "(" << v.m_x << "," << v.m_y << "," << v.m_z << ")";		
 	}
 	else
 	{
-		std::ostringstream oss;
-		oss << "(" << m_x << "," << m_y << ")";
-		return oss.str();
+		oss << "(" << v.m_x << "," << v.m_y << ")";
 	}
+	return oss;
 }

@@ -1,11 +1,5 @@
 #include "Polygon.h"
 
-Polygon::Polygon()
-{
-	m_v = new Vertex[5];
-	m_size = 5;
-}
-
 Polygon::Polygon(const Polygon &p)
 {
 	m_v = new Vertex[p.m_size];
@@ -113,33 +107,19 @@ Polygon operator+(const Polygon &p1, const Polygon &p2)
 	return p;
 }
 
-void Polygon::extend() {
-	Vertex *tmp = m_v;
-	m_v = new Vertex[m_size + 5];
-	m_size += 5;
-
-	for (int i = 0; i < m_size; i++)
-	{
-		m_v[i] = tmp[i];
-	}
-
-	delete []tmp;
-}
-
-std::string Polygon::toString()
+std::ostream &operator<<(std::ostream &oss, const Polygon &p)
 {
-	std::ostringstream oss;
 	oss << "[";
-	for (int i = 0; i < m_size; i++)
+	for (int i = 0; i < p.m_size; i++)
 	{
-		oss << m_v[i].toString();
-		if (i != m_size - 1)
+		oss << p.m_v[i];
+		if (i != p.m_size - 1)
 		{
 			oss << ", ";
 		}
-		oss << "]" << "\n";
 	}
-	return oss.str();
+	oss << "]";
+	return oss;
 }
 
 Polygon::~Polygon()
