@@ -1,7 +1,11 @@
 ﻿  Graph.cpp
+<<<<<<< HEAD
 d:\c++_projects\graph\graph\graph.cpp(7): error C2039: '{ctor}': is not a member of 'Graph<Type>'
 d:\c++_projects\graph\graph\graph.cpp(7): error C2447: '{': missing function header (old-style formal list?)
 d:\c++_projects\graph\graph\graph.cpp(12): error C2039: '{dtor}': is not a member of 'Graph<Type>'
 d:\c++_projects\graph\graph\graph.cpp(12): error C2447: '{': missing function header (old-style formal list?)
 d:\c++_projects\graph\graph\graph.cpp(99): error C2660: 'Graph<char>::addEdge': function does not take 1 arguments
 d:\c++_projects\graph\graph\graph.cpp(104): error C2660: 'Graph<int>::addEdge': function does not take 1 arguments
+=======
+  Graph.vcxproj -> D:\C++_Projects\Graph\Debug\Graph.exe
+>>>>>>> 929640bfff1666b07e49d581e2f27bf7d780c5ec

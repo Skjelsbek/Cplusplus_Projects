@@ -1,5 +1,6 @@
 #include "Graph.h"
 
+<<<<<<< HEAD
 template <class Type>
 const int Graph<Type>::maximum;
 
@@ -85,4 +86,23 @@ Type Graph<Type>::operator[](int vertex) const
 {
 	assert(vertex < size());
 	return labels[vertex];
+=======
+int main()
+{
+	Graph<int> iGraph;
+	Graph<char> cGraph;
+
+	char cArr[] = { "abcdefghij" };
+	int iArr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+	for (int i = 0; i < 5; i++)
+	{
+		iGraph.addVertex(iArr[i]);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		cGraph.addVertex(cArr[i]);
+	}
+>>>>>>> 929640bfff1666b07e49d581e2f27bf7d780c5ec
 }
