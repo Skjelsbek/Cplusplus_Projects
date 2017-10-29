@@ -25,12 +25,32 @@ Vertex::Vertex(const Vertex &v)
 	m_z = v.m_z;
 }
 
+void Vertex::addEdge(Vertex &target)
+{
+	m_edges.push_back(target);
+}
+
+void Vertex::reomveEdge(Vertex &target)
+{
+	m_edges.remove(target);
+	target.m_edges.remove(*this);
+}
+
 Vertex &Vertex::operator=(const Vertex &v)
 {
 	m_x = v.m_x;
 	m_y = v.m_y;
 	m_z = v.m_z;
 	return *this;
+}
+
+bool Vertex::operator==(const Vertex &v) const
+{
+	if (m_x == v.m_x && m_y == v.m_y && m_z == v.m_z)
+	{
+		return true;
+	}
+	return false;
 }
 
 std::ostream &operator<<(std::ostream &oss, const Vertex &v)

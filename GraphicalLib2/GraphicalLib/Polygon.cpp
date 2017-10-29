@@ -2,79 +2,45 @@
 
 Polygon::Polygon(const Polygon &p)
 {
-	m_v = new Vertex[p.m_size];
-	for (int i = 0; i < p.m_size; i++)
-	{
-		m_v[i] = p.m_v[i];
-	}
-	m_size = p.m_size;
+	m_v = p.m_v;
 }
 
-Polygon &Polygon::operator=(const Polygon &p)
+Polygon::Polygon(const Line &l1, const Line &l2) 
 {
-	delete []m_v;
-	m_v = new Vertex[p.m_size];
-	for (int i = 0; i < p.m_size; i++)
-	{
-		m_v[i] = p.m_v[i];
-	}
-	m_size = p.m_size;
-	return *this;
+	m_v.push_back(l1.getv1());
+	m_v.push_back(l1.getv2());
+	m_v.push_back(l2.getv1());
+	m_v.push_back(l2.getv2());
+	connectLineToLine();
 }
 
-Polygon::Polygon(const Line &l1, const Line &l2) {
-	m_v = new Vertex[4];
-	m_v[0] = l1.getv1();
-	m_v[1] = l1.getv2();
-	m_v[2] = l2.getv1();
-	m_v[3] = l2.getv2();
-	m_size = 4;
+Polygon::Polygon(const Line &l, const Vertex &v) 
+{
+	// Separate vertexes and put them in the m_v Vector
+	m_v.push_back(l.getv1());
+	m_v.push_back(l.getv2());
+	m_v.push_back(v);
+
+	connectPointToLine(); // Creates edges between vertexes to connect the polygon
 }
 
-Polygon::Polygon(const Line &l, const Vertex &v) {
-	m_v = new Vertex[3];
-	m_v[0] = l.getv1();
-	m_v[1] = l.getv2();
-	m_v[2] = v;	
-	m_size = 3;
+Polygon::Polygon(const Polygon &p, const Vertex &v) 
+{
+	m_v = p.m_v;
+	m_v.push_back(v);
 }
 
-Polygon::Polygon(const Polygon &p, const Vertex &v) {
-	m_v = new Vertex[p.m_size + 1];
-	int i;
-	for (i = 0; i < p.m_size; i++)
-	{		
-		m_v[i] = p.m_v[i];
-	}
-	m_v[i] = v;
-	m_size = p.m_size + 1;
+Polygon::Polygon(const Polygon &p, const Line &l) 
+{
+	m_v = p.m_v;
+	m_v.push_back(l.getv1());
+	m_v.push_back(l.getv2());
 }
 
-Polygon::Polygon(const Polygon &p, const Line &l) {
-	m_v = new Vertex[p.m_size + 2];
-	int i;
-	for (i = 0; i < p.m_size; i++)
-	{
-		m_v[i] = p.m_v[i];
-	}
-	m_v[i] = l.getv1();
-	m_v[i + 1] = l.getv2();
-	m_size = p.m_size + 2;
-}
-
-Polygon::Polygon(const Polygon &p1, const Polygon &p2) {
-	m_v = new Vertex[p1.m_size + p2.m_size];
-
-	for (int i = 0; i < p1.m_size; i++)
-	{
-		m_v[i] = p1.m_v[i];
-	}
-
-	for (int i = 0; i < p2.m_size; i++)
-	{
-		m_v[i + p1.m_size] = p2.m_v[i];
-	}
-	m_size = p1.m_size + p2.m_size;
+Polygon::Polygon(const Polygon &p1, const Polygon &p2) 
+{
+	m_v = p1.m_v;
+	m_v.insert(m_v.end(), p2.m_v.begin(), p2.m_v.end());
 }
 
 Polygon operator+(const Line &l1, const Line &l2)
@@ -107,13 +73,34 @@ Polygon operator+(const Polygon &p1, const Polygon &p2)
 	return p;
 }
 
+void Polygon::addEdge(Vertex &source, Vertex &target) 
+{
+	int sourceIndex = 0, targetIndex = 0;
+	for (int i = 0; i < m_v.size(); i++)
+	{
+		if (m_v[i] == source)
+		{
+			sourceIndex = i;
+		}
+		if (m_v[i] == target)
+		{
+			targetIndex = i;
+		}
+	}
+	if (sourceIndex != targetIndex)
+	{
+		m_v[sourceIndex].addEdge(m_v[targetIndex]);
+		m_v[targetIndex].addEdge(m_v[sourceIndex]);
+	}
+}
+
 std::ostream &operator<<(std::ostream &oss, const Polygon &p)
 {
 	oss << "[";
-	for (int i = 0; i < p.m_size; i++)
+	for (int i = 0; i < p.m_v.size(); i++)
 	{
 		oss << p.m_v[i];
-		if (i != p.m_size - 1)
+		if (i != p.m_v.size() - 1)
 		{
 			oss << ", ";
 		}
@@ -122,7 +109,24 @@ std::ostream &operator<<(std::ostream &oss, const Polygon &p)
 	return oss;
 }
 
-Polygon::~Polygon()
+void Polygon::connectPointToLine() 
 {
-	delete []m_v;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (j != i)
+			{
+				m_v[i].addEdge(m_v[j]);
+			}
+		}
+	}
+}
+
+void Polygon::connectLineToLine()
+{
+	for (int i = 0; i < m_v.size(); i++)
+	{
+
+	}
 }
