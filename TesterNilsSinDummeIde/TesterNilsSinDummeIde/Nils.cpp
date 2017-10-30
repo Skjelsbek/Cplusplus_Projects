@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <string>
 
 int main() 
 {
@@ -35,6 +36,9 @@ int main()
 
 	}
 	std::cout << std::endl;
+
+	std::string s = "something";
+	const char *c = s.c_str();
 
 	system("PAUSE");
 }
