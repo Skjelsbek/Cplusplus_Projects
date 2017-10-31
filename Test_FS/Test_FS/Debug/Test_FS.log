@@ -1,0 +1,3 @@
+﻿  main.cpp
+d:\c++_projects\test_fs\test_fs\main.cpp(13): warning C4244: 'initializing': conversion from 'std::streamoff' to '::size_t', possible loss of data
+  Test_FS.vcxproj -> D:\C++_Projects\Test_FS\Debug\Test_FS.exe
