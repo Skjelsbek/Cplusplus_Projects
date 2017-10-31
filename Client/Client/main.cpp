@@ -43,10 +43,14 @@ int main()
 		return 1;
 	}
 
-	// Send and receive data
+	// Variables for sending and receiving data
 	char buffer[1024];
 	int bufLen = 1024;
 	std::string userInput;
+
+	// bool to handle disconnect
+	bool dcRequest = false;
+
 	
 	// Sending user input, and receiving response from server
 	do
@@ -60,8 +64,12 @@ int main()
 			// Sending user input
 			int sendResult = send(sock, userInput.c_str(), userInput.size() + 1, 0);
 
-			// Check the return value of send function to see if the transfer was successful
-			if (sendResult != SOCKET_ERROR)
+			/*
+			 * Check the return value of send function to see if the transfer was successful.
+			 * If the transfer was successful and the user didn't send disconnect request,
+			 * recive response from server.
+			 */
+			if (sendResult != SOCKET_ERROR && userInput != "disconnect")
 			{
 				// Clear buffer and receive response from server
 				ZeroMemory(buffer, bufLen);
@@ -73,8 +81,13 @@ int main()
 					std::cout << "Server>" << std::string(buffer, 0, bytesReceived) << std::endl;					
 				}
 			}
-		}
-	} while (userInput.size() > 0); // HUSK Å BYTTE UT DENNE HER!
+			else if (userInput == "disconnect")
+			{
+				// If the user sent disconnect request, set dcRequest true to close connection to server
+				dcRequest = true;
+			}
+		}		
+	} while (!dcRequest);
 	
 	// Clean up and quit.
 	std::cout << "Exiting" << std::endl;
