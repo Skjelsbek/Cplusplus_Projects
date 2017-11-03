@@ -11,11 +11,11 @@ Point3D::Point3D(const double &x, const double &y, const double &z)
 	m_z = z;
 }
 
-Point3D::Point3D(const Point3D &v)
+Point3D::Point3D(const Point3D &p)
 {
-	m_x = v.m_x;
-	m_y = v.m_y;
-	m_z = v.m_z;
+	m_x = p.m_x;
+	m_y = p.m_y;
+	m_z = p.m_z;
 }
 
 void Point3D::addEdge(Point3D &target)
@@ -29,25 +29,17 @@ void Point3D::reomveEdge(Point3D &target)
 	target.m_edges.remove(*this);
 }
 
-Point3D &Point3D::operator=(const Point3D &v)
+bool Point3D::operator==(const Point3D &p) const
 {
-	m_x = v.m_x;
-	m_y = v.m_y;
-	m_z = v.m_z;
-	return *this;
-}
-
-bool Point3D::operator==(const Point3D &v) const
-{
-	if (m_x == v.m_x && m_y == v.m_y && m_z == v.m_z)
+	if (m_x == p.m_x && m_y == p.m_y && m_z == p.m_z)
 	{
 		return true;
 	}
 	return false;
 }
 
-std::ostream &operator<<(std::ostream &oss, const Point3D &v)
+std::ostream &operator<<(std::ostream &os, const Point3D &p)
 {
-	oss << "(" << v.m_x << "," << v.m_y << "," << v.m_z << ")";
-	return oss;
+	os << "(" << p.m_x << "," << p.m_y << "," << p.m_z << ")";
+	return os;
 }

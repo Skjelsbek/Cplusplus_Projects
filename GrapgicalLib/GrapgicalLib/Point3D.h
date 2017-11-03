@@ -9,14 +9,13 @@ class Point3D
 public:
 	Point3D();
 	Point3D(const double &x, const double &y, const double &z);
-	Point3D(const Point3D &v);
+	Point3D(const Point3D &p);
 	void addEdge(Point3D &target);
-	void reomveEdge(Point3D & target);
+	void reomveEdge(Point3D &target);
 	double getX() { return m_x; };
 	double getY() { return m_y; };
-	Point3D &operator=(const Point3D &v);
-	bool operator==(const Point3D & v) const;
-	friend std::ostream &operator<<(std::ostream &o, const Point3D &v);
+	bool operator==(const Point3D &p) const;
+	friend std::ostream &operator<<(std::ostream &os, const Point3D &p);
 
 private:
 	std::list<Point3D> m_edges;

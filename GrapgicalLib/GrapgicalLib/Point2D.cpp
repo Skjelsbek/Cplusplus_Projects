@@ -10,10 +10,10 @@ Point2D::Point2D(const double &x, const double &y)
 	m_y = y;
 }
 
-Point2D::Point2D(const Point2D &v)
+Point2D::Point2D(const Point2D &p)
 {
-	m_x = v.m_x;
-	m_y = v.m_y;
+	m_x = p.m_x;
+	m_y = p.m_y;
 }
 
 void Point2D::addEdge(Point2D &target)
@@ -40,16 +40,9 @@ int Point2D::endgeCount() const
 	return m_edges.size();
 }
 
-Point2D &Point2D::operator=(const Point2D &v)
+bool Point2D::operator==(const Point2D &p) const
 {
-	m_x = v.m_x;
-	m_y = v.m_y;
-	return *this;
-}
-
-bool Point2D::operator==(const Point2D &v) const
-{
-	if (m_x == v.m_x && m_y == v.m_y)
+	if (m_x == p.m_x && m_y == p.m_y)
 	{
 		return true;
 	}
@@ -57,10 +50,10 @@ bool Point2D::operator==(const Point2D &v) const
 }
 
 // Returns a ostream containing bot the x and the y coordinate of a point in brackets
-std::ostream &operator<<(std::ostream &oss, const Point2D &v)
+std::ostream &operator<<(std::ostream &os, const Point2D &p)
 {
-	oss << "(" << v.m_x << "," << v.m_y << ")";
-	return oss;
+	os << "(" << p.m_x << "," << p.m_y << ")";
+	return os;
 }
 
 /*

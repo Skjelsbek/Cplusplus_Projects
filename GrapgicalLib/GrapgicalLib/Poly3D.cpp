@@ -1,132 +1,86 @@
 #include "Poly3D.h"
 
-Poly3D::Poly3D(const Poly3D &p)
+Poly3D::Poly3D(const Poly3D &po)
 {
-	m_v = p.m_v;
+	m_p = po.m_p;
 }
 
 Poly3D::Poly3D(const Line3D &l1, const Line3D &l2)
 {
-	m_v.push_back(l1.getv1());
-	m_v.push_back(l1.getv2());
-	m_v.push_back(l2.getv1());
-	m_v.push_back(l2.getv2());
-	connectLineToLine();
+	m_p.push_back(l1.getv1());
+	m_p.push_back(l1.getv2());
+	m_p.push_back(l2.getv1());
+	m_p.push_back(l2.getv2());	
 }
 
-Poly3D::Poly3D(const Line3D &l, const Point3D &v)
+Poly3D::Poly3D(const Line3D &l, const Point3D &p)
 {
-	// Separate vertexes and put them in the m_v Vector
-	m_v.push_back(l.getv1());
-	m_v.push_back(l.getv2());
-	m_v.push_back(v);
-
-	connectPointToLine(); // Creates edges between vertexes to connect the polygon
+	// Separate vertexes and put them in the m_p Vector
+	m_p.push_back(l.getv1());
+	m_p.push_back(l.getv2());
+	m_p.push_back(p);
 }
 
-Poly3D::Poly3D(const Poly3D &p, const Point3D &v)
+Poly3D::Poly3D(const Poly3D &po, const Point3D &p)
 {
-	m_v = p.m_v;
-	m_v.push_back(v);
+	m_p = po.m_p;
+	m_p.push_back(p);
 }
 
-Poly3D::Poly3D(const Poly3D &p, const Line3D &l)
+Poly3D::Poly3D(const Poly3D &po, const Line3D &l)
 {
-	m_v = p.m_v;
-	m_v.push_back(l.getv1());
-	m_v.push_back(l.getv2());
+	m_p = po.m_p;
+	m_p.push_back(l.getv1());
+	m_p.push_back(l.getv2());
 }
 
-Poly3D::Poly3D(const Poly3D &p1, const Poly3D &p2)
+Poly3D::Poly3D(const Poly3D &po1, const Poly3D &po2)
 {
-	m_v = p1.m_v;
-	m_v.insert(m_v.end(), p2.m_v.begin(), p2.m_v.end());
+	m_p = po1.m_p;
+	m_p.insert(m_p.end(), po2.m_p.begin(), po2.m_p.end());
 }
 
 Poly3D operator+(const Line3D &l1, const Line3D &l2)
 {
-	Poly3D p(l1, l2);
-	return p;
+	Poly3D poly(l1, l2);
+	return poly;
 }
 
-Poly3D operator+(const Line3D &l, const Point3D &v)
+Poly3D operator+(const Line3D &l, const Point3D &p)
 {
-	Poly3D p(l, v);
-	return p;
+	Poly3D poly(l, p);
+	return poly;
 }
 
-Poly3D operator+(const Poly3D &p, const Point3D &v)
+Poly3D operator+(const Poly3D &po, const Point3D &p)
 {
-	Poly3D po(p, v);
-	return po;
+	Poly3D poly(po, p);
+	return poly;
 }
 
-Poly3D operator+(const Poly3D &p, const Line3D &l)
+Poly3D operator+(const Poly3D &po, const Line3D &l)
 {
-	Poly3D po(p, l);
-	return po;
+	Poly3D poly(po, l);
+	return poly;
 }
 
-Poly3D operator+(const Poly3D &p1, const Poly3D &p2)
+Poly3D operator+(const Poly3D &po1, const Poly3D &po2)
 {
-	Poly3D p(p1, p2);
-	return p;
+	Poly3D poly(po1, po2);
+	return poly;
 }
 
-void Poly3D::addEdge(Point3D &source, Point3D &target)
+std::ostream &operator<<(std::ostream &os, const Poly3D &po)
 {
-	int sourceIndex = 0, targetIndex = 0;
-	for (int i = 0; i < m_v.size(); i++)
+	os << "[";
+	for (int i = 0; i < po.m_p.size(); i++)
 	{
-		if (m_v[i] == source)
+		os << po.m_p[i];
+		if (i != po.m_p.size() - 1)
 		{
-			sourceIndex = i;
-		}
-		if (m_v[i] == target)
-		{
-			targetIndex = i;
+			os << ", ";
 		}
 	}
-	if (sourceIndex != targetIndex)
-	{
-		m_v[sourceIndex].addEdge(m_v[targetIndex]);
-		m_v[targetIndex].addEdge(m_v[sourceIndex]);
-	}
-}
-
-std::ostream &operator<<(std::ostream &oss, const Poly3D &p)
-{
-	oss << "[";
-	for (int i = 0; i < p.m_v.size(); i++)
-	{
-		oss << p.m_v[i];
-		if (i != p.m_v.size() - 1)
-		{
-			oss << ", ";
-		}
-	}
-	oss << "]";
-	return oss;
-}
-
-void Poly3D::connectPointToLine()
-{
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			if (j != i)
-			{
-				m_v[i].addEdge(m_v[j]);
-			}
-		}
-	}
-}
-
-void Poly3D::connectLineToLine()
-{
-	for (int i = 0; i < m_v.size(); i++)
-	{
-
-	}
+	os << "]";
+	return os;
 }
