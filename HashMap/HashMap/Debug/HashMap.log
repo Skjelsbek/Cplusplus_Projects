@@ -1,0 +1,3 @@
+﻿  Source.cpp
+d:\c++_projects\hashmap\hashmap\linkedlist.h(81): warning C4715: 'LinkedList<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,void (__cdecl*)(void)>::get': not all control paths return a value
+  HashMap.vcxproj -> D:\C++_Projects\HashMap\Debug\HashMap.exe
